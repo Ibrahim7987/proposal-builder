@@ -25,10 +25,9 @@ function Social(props: ContentsProps) {
     }
     return (
         // <div className="mt-1">
-        <table width="100%">
-            <tbody>
-                <tr>
-                    <td width="100%" align={content.options.align} style={socialStyles}>
+        <div style={{ width: "100%" }}>
+            
+                    <div  className={`justify-${content.options.align == 'right' ? 'end' : `${content.options.align == 'center' ? 'center' : 'start'}`} flex`} style={{...socialStyles, width: "100%" }}>
                         {/* <div className="d-flex"> */}
                         {content.options.socialLinks && content.options.socialLinks.map((social: socialLinks) => {
                             return (
@@ -37,10 +36,9 @@ function Social(props: ContentsProps) {
                         })}
                         {/* </div> */}
 
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                    </div>
+               
+        </div>
         // </div>
 
     );

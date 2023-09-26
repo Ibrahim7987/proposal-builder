@@ -15,15 +15,13 @@ function Divider(props: ContentsProps) {
         <div
         //  style={dividerDivStyles}
         >
-            <table style={{ width: "100%" }}>
-                <tbody>
-                    <tr>
-                        <td width="100%" align={content.options.align}>
+            <div style={{ width: "100%" }}>
+                
+                        <div style={{ width: "100%"}} className={`justify-${content.options.align == 'right' ? 'end' : `${content.options.align == 'center' ? 'center' : 'start'}`} flex`}>
                             <p style={dividerStyles}></p>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                        </div>
+                    
+            </div>
         </div>
 
 

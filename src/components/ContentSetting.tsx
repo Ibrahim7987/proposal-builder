@@ -689,9 +689,9 @@ function ContentSetting() {
                                                 productContent.options.image = value
                                             }
                                         }
-                                        if (proposalProduct && proposalProduct.image_url)
+                                        if (proposalProduct && proposalProduct.image_url != undefined)
                                             proposalProduct.image_url = value
-                                        //  contextData.updateBuilderData(elements, contextData.proposalTemplateJSON.proposalSettings)
+                                        contextData.updateBuilderData(elements, contextData.proposalTemplateJSON.proposalSettings)
                                         return value
 
                                     }

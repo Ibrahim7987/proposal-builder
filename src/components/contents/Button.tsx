@@ -21,10 +21,9 @@ function Button(props: ContentsProps) {
         lineHeight: `${content.options.lineHeight}px`,
     }
     return (
-        <table width="100%">
-            <tbody>
-                <tr>
-                    <td width="100%" align={content.options.align}>
+        <div style={{ width: "100%" }}>
+           
+                    <div style={{ width: "100%"}} className={`justify-${content.options.align == 'right' ? 'end' : `${content.options.align == 'center' ? 'center' : 'start'}`} flex`}>
                         <div style={{
                             marginTop: `${content.options.margin[0]}px`,
                             marginRight: `${content.options.margin[1]}px`,
@@ -34,10 +33,9 @@ function Button(props: ContentsProps) {
                             <button className={content.options.fluidOnMobile ? "btn-mobile-fullwidth" : ""} style={buttonStyles}> {content.options.buttonText}</button>
 
                         </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table >
+                    </div>
+              
+        </div >
     );
 }
 

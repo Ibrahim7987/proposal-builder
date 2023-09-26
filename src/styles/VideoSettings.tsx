@@ -59,7 +59,7 @@ function VideoSettings(props: VideoProps) {
                         </div>
                         {videoLinkTo.type === "templates" ?
                             <>
-                                <select className="form-select eb-form-control" value={videoLinkTo?.id} onChange={(e) => onChangeVideoTemplate(e.target.value)}>
+                                <select className="block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-blue-600 sm:text-sm sm:leading-6" value={videoLinkTo?.id} onChange={(e) => onChangeVideoTemplate(e.target.value)}>
                                     <option value="">Choose Template</option>
                                     {videoTemplatesList.map((videoTemplate: any) => {
                                         return (
@@ -70,21 +70,21 @@ function VideoSettings(props: VideoProps) {
 
                                 </select>
                             </> : (
-                                <><div className="form-group text-start">
-                                    <label className="form-label">Video url</label>
-                                    <input className="form-control eb-form-control form-input" placeholder="www.example.com" value={videoLinkTo.link} onChange={(e) => onChangeVideoUrl(e.target.value)} />
+                                <><div className="text-start mb-2">
+                                    <label className="block text-sm leading-6 text-gray-900">Video url</label>
+                                    <input className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6" placeholder="www.example.com" value={videoLinkTo.link} onChange={(e) => onChangeVideoUrl(e.target.value)} />
                                 </div>
 
-                                    <div className="form-group text-start">
-                                        <label className="form-label">Video Thumbnail</label>
+                                    <div className="text-start mb-2">
+                                        <label className="block text-sm leading-6 text-gray-900">Video Thumbnail</label>
                                         <div className="upload">
                                             <div className="current-image">
-                                                <img alt="video-url" src={videoLinkTo.thumbnail} />
+                                                <img alt="video-url" src={videoLinkTo.thumbnail} height="auto" width="100px"/>
                                             </div>
                                             <div className="upload-image">
-                                                <button className="btn btn-primary mb-2" onClick={() => selectRepoImage()} >Upload Image</button>
+                                                <button className="rounded-md bg-blue-600 px-3 py-2 text-sm text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 mb-2" onClick={() => selectRepoImage()} >Upload Image</button>
 
-                                                <input className="form-control eb-form-control" value={videoLinkTo.thumbnail} onChange={(e) => onChangeVideoThumbnail(e.target.value)} placeholder="url" />
+                                                <input className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6" value={videoLinkTo.thumbnail} onChange={(e) => onChangeVideoThumbnail(e.target.value)} placeholder="url" />
                                             </div>
 
                                         </div>

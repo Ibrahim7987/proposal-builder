@@ -4,6 +4,12 @@ import { ContentPayload, socialLinks } from "../models/ContentModels";
 import { ColumnPayload, ContentStyleEditorType, ProposalBuilderContext, ProposalBuilderContextPayload, SectionPayload } from "../models/GeneralModels";
 import { contentAccordion, selectImage } from "../Utils";
 import Accordion from "../Accordion";
+import { Menu } from "@headlessui/react";
+import Dropdown from "../Dropdown";
+
+function classNames(...classes: any) {
+    return classes.filter(Boolean).join(' ')
+  }
 
 function SocialNetworks(props: ContentStyleEditorType) {
     const { elements } = props
@@ -175,11 +181,11 @@ function SocialNetworks(props: ContentStyleEditorType) {
 
             <Accordion title="Social Networks" accordionJSX={() => {
                 return (<DragDropContext onDragEnd={(results) => ondragEnd(results)}>
-                    <div className="d-flex flex-row justify-content-between">
-                        <div>
+                    <div className=" flex justify-between">
+                        <div className="text-sm leading-6">
                             Socials Links
                         </div>
-                        <div onClick={() => addNewNetwork()} className="text-primary cursor-pointer">
+                        <div onClick={() => addNewNetwork()} className="text-sm leading-6 text-primary cursor-pointer">
                             + Add Network
                         </div>
                     </div>
@@ -203,14 +209,15 @@ function SocialNetworks(props: ContentStyleEditorType) {
                                                                         {...provided.draggableProps}
                                                                         ref={provided.innerRef}
                                                                     >
-                                                                        <div className="text-start p-2 bg-light mb-2 round position-relative">
+                                                                        <div className="text-start p-2 bg-slate-50 mb-2 relative">
+                                                                           <div className="flex items-center">
                                                                             <span {...provided.dragHandleProps}>
                                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 48 48"><title>drag-arrow</title><g id="Layer_2" data-name="Layer 2"><g id="invisible_box" data-name="invisible box"><rect width="48" height="48" fill="none"></rect></g><g id="icons_Q2" data-name="icons Q2"><path d="M45.4,22.6l-5.9-6a2.1,2.1,0,0,0-2.7-.2,1.9,1.9,0,0,0-.2,3L39.2,22H26V8.8l2.6,2.6a1.9,1.9,0,0,0,3-.2,2.1,2.1,0,0,0-.2-2.7l-6-5.9a1.9,1.9,0,0,0-2.8,0l-6,5.9a2.1,2.1,0,0,0-.2,2.7,1.9,1.9,0,0,0,3,.2L22,8.8V22H8.8l2.6-2.6a1.9,1.9,0,0,0-.2-3,2.1,2.1,0,0,0-2.7.2l-5.9,6a1.9,1.9,0,0,0,0,2.8l5.9,6a2.1,2.1,0,0,0,2.7.2,1.9,1.9,0,0,0,.2-3L8.8,26H22V39.2l-2.6-2.6a1.9,1.9,0,0,0-3,.2,2.1,2.1,0,0,0,.2,2.7l6,5.9a1.9,1.9,0,0,0,2.8,0l6-5.9a2.1,2.1,0,0,0,.2-2.7,1.9,1.9,0,0,0-3-.2L26,39.2V26H39.2l-2.6,2.6a1.9,1.9,0,0,0,.2,3,2.1,2.1,0,0,0,2.7-.2l5.9-6A1.9,1.9,0,0,0,45.4,22.6Z"></path></g></g></svg>
                                                                             </span>
                                                                             {social.icon ? (
                                                                                 <img className="ms-2" height={"auto"} width={30} src={social.icon} alt={social.alt} />
-                                                                            ) : <></>}  <span className="ms-1"> {social.alt}</span>
-                                                                            <span className="d-flex gap-1 align-items-center position-absolute" style={{ right: "10px", top: "12px" }}>
+                                                                            ) : <></>}  <span className="ms-1 text-sm"> {social.alt}</span>
+                                                                            <span className="flex  items-center absolute gap-1" style={{ right: "10px", top: "12px" }}>
                                                                                 <span className="cursor-pointer" onClick={() => setShowEditModel({ ...showEditmodelSetting, networkIndex: socialNetworkIndex, showModal: !showEditmodelSetting.showModal })}>
                                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none">
                                                                                         <g id="style=linear">
@@ -225,30 +232,65 @@ function SocialNetworks(props: ContentStyleEditorType) {
                                                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="#000" width="16" height="16" viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"></path></svg>
                                                                                 </span>
                                                                             </span>
+                                                                            </div>
                                                                             {showEditmodelSetting.networkIndex === socialNetworkIndex && showEditmodelSetting.showModal ? (
 
                                                                                 <div className="mt-2">
-                                                                                    {contentAccordion("Social", () => {
+
+
+                                                                                    <Accordion title="Social" accordionJSX={() => {
                                                                                         return (
                                                                                             <>
-                                                                                                <div className="form-group text-start">
-                                                                                                    <div className="form-group text-start">
-                                                                                                        <label className="form-label">Link</label>
-                                                                                                        <button className="btn btn-link text-decoration-none p-0 dropdown-toggle float-end" type="button" data-bs-toggle="dropdown" aria-expanded="false">Options</button>
-                                                                                                        <ul className="dropdown-menu dropdown-menu-end">
+                                                                                                
+                                                                                                    <div className="mb-2 text-start">
+                                                                                                        <div className=" flex justify-between items-center">
+                                                                                                        <label className="block text-sm leading-6 text-gray-900">Link</label>
+                                                                                                        {/* <button className="btn btn-link text-decoration-none p-0 dropdown-toggle float-end" type="button" data-bs-toggle="dropdown" aria-expanded="false">Options</button> */}
+                                                                                                        
+                                                                                                        <Dropdown title="Options" >
+                        {
+                            () => {
+                                return (
+                                    defaultSocialLinks.map((socialLink: any) => {
+                                        return (
+                                            <Menu.Item>
+        {({ active }) => (
+        <a
+        href="#"
+        onClick={() => onChangeSocialLink(rowIndex, columnIndex, contentIndex, socialNetworkIndex, socialLink.link)}
+        className={classNames(
+        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+        'block px-4 py-2 text-sm'
+        )}
+        >
+        {socialLink.alt}
+        </a>
+        )}
+        </Menu.Item>
+                                        )
+                                    })
+                                )
+                            }
+                        }
+                    </Dropdown>
+                    </div>
+                                                                                                        {/* <ul className="dropdown-menu dropdown-menu-end">
                                                                                                             {defaultSocialLinks.map((socialLink: any) => {
                                                                                                                 return (
                                                                                                                     <li onClick={() => onChangeSocialLink(rowIndex, columnIndex, contentIndex, socialNetworkIndex, socialLink.link)}><a className="dropdown-item">{socialLink.alt}</a></li>
                                                                                                                 )
                                                                                                             })}
-                                                                                                        </ul>
-                                                                                                        <input value={social.link} className="form-control eb-form-control" onChange={(e) => onChangeSocialLink(rowIndex, columnIndex, contentIndex, socialNetworkIndex, e.target.value)} />
+                                                                                                        </ul> */}
+                                                                                                        <div className="mt-2">
+                                                                                                        <input value={social.link} className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6" onChange={(e) => onChangeSocialLink(rowIndex, columnIndex, contentIndex, socialNetworkIndex, e.target.value)} />
+                                                                                                        </div>
                                                                                                     </div>
-                                                                                                    <div className="form-group">
-                                                                                                        <label className="form-label">Alt</label>
-                                                                                                        <input className="form-control eb-form-control" onChange={(e) => onChangeSocialName(rowIndex, columnIndex, contentIndex, socialNetworkIndex, e.target.value)} value={social.alt} />
+                                                                                                    <div className="text-start mb-2">
+                                                                                                        <label className="block text-sm leading-6 text-gray-900">Alt</label>
+                                                                                                        <div className="mt-2">
+                                                                                                        <input className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6" onChange={(e) => onChangeSocialName(rowIndex, columnIndex, contentIndex, socialNetworkIndex, e.target.value)} value={social.alt} />
+                                                                                                        </div>
                                                                                                     </div>
-                                                                                                </div>
 
                                                                                                 <div className="upload">
                                                                                                     <div className="current-image">
@@ -259,12 +301,12 @@ function SocialNetworks(props: ContentStyleEditorType) {
                                                                                                             // type="file" 
                                                                                                             onChange={(e) => onChangeSocialMediaIcon(rowIndex, columnIndex, contentIndex, socialNetworkIndex, e.target.value)} /> */}
                                                                                                         <button className="btn btn-primary me-2 mb-2" onClick={(e) => selectRepoImage(rowIndex, columnIndex, contentIndex, socialNetworkIndex)} >Upload Image</button>
-                                                                                                        <input value={social.icon} className="form-control eb-form-control" onChange={(e) => onChangeSocialMediaIcon(rowIndex, columnIndex, contentIndex, socialNetworkIndex, e.target.value)} placeholder="url" />
+                                                                                                        <input value={social.icon} className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6" onChange={(e) => onChangeSocialMediaIcon(rowIndex, columnIndex, contentIndex, socialNetworkIndex, e.target.value)} placeholder="url" />
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </>
                                                                                         )
-                                                                                    }, "SocialAccordion", "Socialcollapsetarget", "socialTarget")}
+                                                                                    }} />
                                                                                 </div>
                                                                             ) : <></>}
 

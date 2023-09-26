@@ -11,9 +11,9 @@ function Iconsize(props: IconSizeProps) {
             <Accordion title="Icon Size" accordionJSX={() => {
                 return (
                     <>
-                        <div className="form-group">
+                        <div className="text-start">
                             {/* <label className="form-label">Height</label> */}
-                            <input className="form-control eb-form-control" type="number" min={0} value={iconSize} onChange={(e) => onChangeIconSize(e.target.value)} />
+                            <input className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6" type="number" min={0} value={iconSize} onChange={(e) => onChangeIconSize(e.target.value)} />
                         </div>
                     </>
                 )
