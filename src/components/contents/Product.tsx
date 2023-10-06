@@ -15,6 +15,7 @@ const Product = (props: ProductProps) => {
         proposalProducts?.proposal_products.map((product: any, index: number) => (
             content.options.productContents.push(createDynamicContent(product))
         ))
+        content.options.currency = proposalProducts?.currency;
     }, [proposalProducts?.proposal_products])
 
     const calculateProductActualAmountFromDiscount = (price: number, discount: number, discount_type: string, properties: any[], quantity: number) => {
@@ -97,6 +98,16 @@ const Product = (props: ProductProps) => {
             return currecy;
         } else
             return "$";
+    }
+
+    const roundNumberBy2 = (totalAmount: number) => {
+        try {
+            if (!totalAmount) return totalAmount;
+
+            return Math.round(Number(totalAmount) * 100) / 100;
+        } catch (e) { }
+
+        return totalAmount;
     }
 
 
@@ -204,14 +215,14 @@ const Product = (props: ProductProps) => {
                                             <th
                                                 scope="row"
                                                 colSpan={5}
-                                                className="hidden pl-4 pr-3 pt-4 text-right text-sm font-semibold text-gray-900 sm:table-cell sm:pl-0"
+                                                className=" text-right text-sm font-semibold text-gray-900 sm:pr-0 whitespace-nowrap px-3 py-3 "
                                             >
-                                                Total
+                                                Total:
                                             </th>
                                             <th scope="row" className="pl-4 pr-3 pt-4 text-left text-sm font-semibold text-gray-900 sm:hidden">
                                                 Total
                                             </th>
-                                            <td className="pl-3 pr-4 pt-4 text-left text-sm font-semibold text-gray-900 sm:pr-0">$ {totalAmount}</td>
+                                            <td className=" text-left text-sm font-semibold text-gray-900 sm:pr-0 whitespace-nowrap px-3 py-3 ">{getCurrencySymbol(content.options.currency)} {roundNumberBy2(totalAmount)}</td>
                                         </tr>
                                     </tfoot>
                                 </table>

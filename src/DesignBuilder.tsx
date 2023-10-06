@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useRef, useState } from 'react'
 import StaticColumns from "./json/StaticColumns";
 import { DragDropContext, DragUpdate, Droppable, DroppableProvided, DropResult } from 'react-beautiful-dnd'
 import { ActiveElementType, DefaultHover, DroppableSnapshot, PlaceholderProps, ProposalBuilderContext, SectionPayload } from './models/GeneralModels';
@@ -17,6 +17,7 @@ import Email from './proposal-sections/Email'
 import Insights from './proposal-sections/Insights'
 import Save from './Modals/Save'
 
+
 import * as ReactDOMServer from 'react-dom/server';
 import {
     Offcanvas,
@@ -31,7 +32,7 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
 import StaticContents from './json/StaticContents';
 import AddProduct from './Modals/AddProduct';
 import EditAndSaveProducts from './Modals/EditAndSaveProducts';
-import { PARENT } from './Globals';
+import { PARENT, PREDESIGNED_TEMPLATE_NAME, PROPOSAL_JSON, PROPOSAL_TEMPLATE_ID } from './Globals';
 import { contentContentOptions } from './models/ContentModels';
 import designedBlocks from './json/PredefinedBlocks';
 import { getReq } from './Requests';
@@ -40,11 +41,12 @@ initTE({ Offcanvas, Ripple, Dropdown, Collapse });
 
 const DesignBuilder = () => {
 
+    const cancelButtonRef = useRef(null);
+
     const editorJson: any = [
         { "id": "8780e57f-cc60-9480-2f17-e6f9a6960eb6", "columnType": "BlockOneColumn", "type": "block", "hovered": false, "options": { "background": { "url": "", "noRepeat": false, "size": "cover", "positionX": "center", "positionY": "center", "color": "#ffffff" }, "sectionBackground": { "url": "", "noRepeat": true, "size": "cover", "positionX": "center", "positionY": "center", "color": "transparent" }, "border": { "size": 0, "style": "solid", "color": "#DDDDDD", "applyTo": ["left", "right", "top", "bottom"] }, "padding": [10, 10, 10, 10], "margin": [0, 0, 0, 0] }, "columns": [{ "id": "b09accf2-56a0-2305-7be0-c87706a08162", "columnWidthPercentage": 100, "contents": [], "options": { "backgroundColor": "transparent", "innerBackgroundColor": "transparent", "padding": [0, 0, 0, 0], "border": { "size": 1, "style": "solid", "color": "transparent" }, "innerBorder": { "size": 0, "style": "solid", "applyTo": ["left", "right", "top", "bottom"], "color": "#DADFE1" }, "verticalAlign": "middle" } }] }, { "id": "id1614841174008RAND3404", "component": "blockTemplate", "columns": [{ "contents": [{ "component": "textTemplate", "options": { "padding": ["5", 15, "5", 15], "backgroundColor": "transparent", "text": "<p style=\"margin: 0px; word-break: break-word; line-height: 1.6; text-align: center;\"><span style=\"color: #8899a6; font-size: 12px;\">Don't want to get emails like this? <a class=\"eb-unsubscribe-link\" style=\"text-decoration: none;\" href=\"{{JSONObject.unsubscribe_link}}\" target=\"_blank\" rel=\"noopener\">Unsubscribe</a> from our emails</span></p>", "font": { "family": "inherit" } }, "id": "id1614841176767RAND30514", "hovered": false, "type": "text" }, { "component": "textTemplate", "options": { "padding": ["5", 15, "5", 15], "backgroundColor": "transparent", "className": "eb-address-container", "text": "<p style=\"margin: 0px; word-break: break-word; line-height: 1.6; text-align: center;\"><span style=\"color: #8899a6; font-size: 12px;\">{{Domain.street}}, {{Domain.city}}, {{Domain.state}}, {{Domain.zip}}, {{Domain.country}}</span></p>", "font": { "family": "inherit" } }, "id": "id1614841512688RAND23779", "hovered": false, "type": "text" }], "options": { "border": { "size": 0, "styleOptions": ["solid", "dashed", "dotted"], "color": "#DADFE1", "style": "solid", "applyTo": ["left", "right", "top", "bottom"] }, "verticalAlign": "top", "backgroundColor": "transparent", "innerBackgroundColor": "transparent", "innerBorder": { "size": 0, "style": "solid", "color": "#dddddd", "applyTo": ["left", "right", "top", "bottom"] }, "padding": [0, 0, 0, 0] }, "columnWidthPercentage": 100 }], "options": { "padding": [30, 10, 0, 10], "className": "eb-footer-container", "sectionBackground": { "url": "", "noRepeat": false, "size": "auto", "positionX": "center", "positionY": "center", "color": "" }, "background": { "color": "transparent", "url": "", "noRepeat": true, "size": "cover", "positionX": "center", "positionY": "center" }, "border": { "size": 0, "style": "solid", "color": "#dddddd", "applyTo": ["left", "right", "top", "bottom"] }, "margin": [0, 0, 0, 0] }, "hovered": false, "type": "block" }
     ]
 
-    const [open, setOpen] = useState(true)
     const [rightOpen, setRightOpen] = useState(true)
 
     const { proposalSettings } = defaultProposalSetting
@@ -84,7 +86,7 @@ const DesignBuilder = () => {
 
     const initialConfirmationModal = {
         showModal: false,
-        modalMessage: "Are you sure?",
+        modalMessage: "Are you sure ?",
         btnText: "Save",
         callBack: () => { },
         modalTitle: "Save Proposal Template"
@@ -153,6 +155,18 @@ const DesignBuilder = () => {
         // overflowY: "scroll",
         // overflow: "hidden"
     }
+
+    useEffect(() => {
+
+        if (!PROPOSAL_TEMPLATE_ID && !PREDESIGNED_TEMPLATE_NAME) {
+
+
+            updateHistroy(proposalTemplateJSON.elements, proposalTemplateJSON.proposalSettings);
+
+
+            return;
+        }
+    }, []);
 
     function handleRedo() {
         if (histroyPosition === actionHistory.length - 1) {
@@ -279,9 +293,10 @@ const DesignBuilder = () => {
         if (results.source.droppableId === "content-droppable" && results.type === "content") {
             if (results.draggableId === "column-0-product_list-0" && getDroppedDetails) {
                 PARENT.Engagebay_Proposal_Router_Utils.addEditProducts(
-                    undefined, function (updatedProposalJSON: contentContentOptions) {
+                    PROPOSAL_JSON, function (updatedProposalJSON: contentContentOptions) {
                         setProposalProducts(updatedProposalJSON);
                         console.log(updatedProposalJSON);
+                        console.log(PROPOSAL_JSON);
 
                         dropContents(results, getDroppedDetails)
 
@@ -575,6 +590,70 @@ const DesignBuilder = () => {
                 </Routes>
             </BrowserRouter>
             <ProposalBuilderContext.Provider value={{ confirmationModal, setConfirmationModal, fallbackMode, proposalTemplateJSON, predefinedTemplates, setPredefindedTemplates, setProposalTemplateJSON, updateBuilderData, activeElement, setActiveElement, onHover, setOnHover }}>
+                <Transition.Root show={confirmationModal.showModal} as={Fragment}>
+                    <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={() => setConfirmationModal({ ...confirmationModal, showModal: false })}>
+                        <Transition.Child
+                            as={Fragment}
+                            enter="ease-out duration-300"
+                            enterFrom="opacity-0"
+                            enterTo="opacity-100"
+                            leave="ease-in duration-200"
+                            leaveFrom="opacity-100"
+                            leaveTo="opacity-0"
+                        >
+                            <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                        </Transition.Child>
+
+                        <div className="fixed inset-0 z-10 overflow-y-auto">
+                            <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                                <Transition.Child
+                                    as={Fragment}
+                                    enter="ease-out duration-300"
+                                    enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                                    enterTo="opacity-100 translate-y-0 sm:scale-100"
+                                    leave="ease-in duration-200"
+                                    leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+                                    leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                                >
+                                    <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                                        <div className="bg-white px-4 pb-4 sm:p-6 sm:pb-4">
+                                            <div className="sm:flex sm:items-start">
+
+                                                <div className="mt-3 sm:ml-4 sm:mt-0 sm:text-left">
+                                                    <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
+                                                        {confirmationModal.modalTitle}
+                                                    </Dialog.Title>
+                                                    <div className="mt-2">
+                                                        <p className="text-sm text-gray-500">
+                                                            {confirmationModal.modalMessage}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                                            <button
+                                                type="button"
+                                                className="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:ml-3 sm:w-auto"
+                                                onClick={() => confirmationModal.callBack()}
+                                            >
+                                                {confirmationModal.btnText}
+                                            </button>
+                                            <button
+                                                type="button"
+                                                className="inline-flex w-full justify-center rounded-md bg-white-600 px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-300 sm:mt-0 sm:w-auto border-1"
+                                                onClick={() => setConfirmationModal({ ...confirmationModal, showModal: false })}
+                                                ref={cancelButtonRef}
+                                            >
+                                                Cancel
+                                            </button>
+                                        </div>
+                                    </Dialog.Panel>
+                                </Transition.Child>
+                            </div>
+                        </div>
+                    </Dialog>
+                </Transition.Root >
                 <DragDropContext
                     onDragEnd={onDragEnd}
                     onDragUpdate={onDragUpdate}                >

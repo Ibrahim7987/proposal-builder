@@ -1,4 +1,4 @@
-import { contentContentOptions } from "./models/ContentModels";
+export const PROPOSAL_TEMPLATE_ID: number = (window as any).PROPOSAL_TEMPLATE_ID ? (window as any).PROPOSAL_TEMPLATE_ID : "";
 
 export const API_KEY: any = "kagbbqufq1atfo7mdrrn9c6qps";
 
@@ -9,6 +9,8 @@ export const SERVER_PREFIX_PATH = (LOCALENV ? "local" : "rest");
 
 export var proposalProducts: any = {};
 export const BUILD_META_INFO: string = (window as any).buildMetaInfo ? (window as any).buildMetaInfo : undefined;
+export const PROPOSAL_JSON: any = (window as any).PROPOSAL_JSON;
+export const PREDESIGNED_TEMPLATE_NAME: string = (window as any).PREDESIGNED_TEMPLATE_NAME;
 
 export const SERVER_HOST_DOMAIN_URL: string = ((window as any).SERVER_HOST_DOMAIN_URL) ? (window as any).SERVER_HOST_DOMAIN_URL : "/";
 

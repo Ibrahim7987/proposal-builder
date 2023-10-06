@@ -1,6 +1,6 @@
 import { Editor } from "@tinymce/tinymce-react";
 import React from 'react'
-import { checkIsCustomFontFamily, checkIsGoogleFontFamily } from "../Utils";
+import { checkIsCustomFontFamily, checkIsGoogleFontFamily, selectImage } from "../Utils";
 import { PARENT } from "../Globals";
 //import { PARENT } from "../Globals";
 
@@ -61,12 +61,12 @@ const TinyMCEEditor = (props: any) => {
                     relative_urls: false,
                     file_picker_callback: function (cb,
                         value, meta) {
-                        // selectImage(['png',
-                        //     'jpg', 'jpeg', 'gif', 'bmp'], function (file: any) {
-                        //         cb(file.url, {
-                        //             title: file.name
-                        //         });
-                        //     });
+                        selectImage(['png',
+                            'jpg', 'jpeg', 'gif', 'bmp'], function (file: any) {
+                                cb(file.url, {
+                                    title: file.name
+                                });
+                            });
                     },
                     setup: function (editor) {
                         editor.ui.registry.addMenuButton('personalization',

@@ -2231,6 +2231,11 @@ input {
     outline: none;
 }
 
+th .mce-content-body.mce-edit-focus {
+    outline: 2px solid #7cafff;
+    z-index: 1;
+}
+
 .mce-btn.mce-active,
 .mce-btn.mce-active:hover,
 .mce-btn.mce-active:focus,

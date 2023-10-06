@@ -134,6 +134,7 @@ type ProductProposalsContentOptions = {
     proposal_products: ProductProposalsContentOptionsPayload[],
     innerConetents: any[],
     productContents: any[],
+    currency: string
 }
 
 type DividerContentOptions = {

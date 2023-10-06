@@ -44,7 +44,7 @@ const Editor = (props: EditorArray) => {
 
         const confirmationModalObj = {
             showModal: true,
-            modalMessage: "Are you sure?",
+            modalMessage: "Are you sure ?",
             btnText: "Delete",
             callBack: () => {
                 const activeElementObj = {
@@ -131,7 +131,7 @@ const Editor = (props: EditorArray) => {
         if (type === "delete") {
             const confirmationModalObj = {
                 showModal: true,
-                modalMessage: "Are you sure?",
+                modalMessage: "Are you sure ?",
                 btnText: "Delete",
                 callBack: () => {
                     newElements.splice(index, 1)
