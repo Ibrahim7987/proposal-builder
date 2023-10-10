@@ -273,6 +273,57 @@ const DesignBuilder = () => {
         });
     };
 
+    function addEditProducts(results: DropResult | any, getDroppedDetails: string[] | any) {
+        PARENT.Engagebay_Proposal_Router_Utils.addEditProducts(
+            PROPOSAL_JSON, function (updatedProposalJSON: contentContentOptions) {
+                setProposalProducts(updatedProposalJSON);
+                console.log(updatedProposalJSON);
+                console.log(PROPOSAL_JSON);
+                if (results)
+                    dropContents(results, getDroppedDetails)
+
+                //fillProductList($container);
+                // Fetch proposla amount
+                getReq("/rest/api/panel/proposals/get-amount", {
+                    'product_details': JSON.stringify(updatedProposalJSON?.proposal_products),
+                    'currency': PARENT.currentUserPrefs.get("currency"),
+                }).then((response: any) => {
+
+                    console.log(response.data.total_amount)
+                    setTotalAmount(response.data.total_amount);
+
+
+                }).catch((e) => {
+                    // setLoading(false);
+                });
+                // $
+                //     .ajax({
+                //         type: "GET",
+                //         data: {
+                //             'product_details': JSON.stringify(PROPOSAL_JSON.proposal_products),
+                //             'currency': PROPOSAL_JSON.currency,
+                //             'discount': PROPOSAL_JSON.proposal_products.discount
+                //         },
+                //         dataType: 'json',
+                //         url: "/rest/api/panel/proposals/get-amount",
+                //         success: function (response) {
+
+                //             $container
+                //                 .find('#calculatedProposalTotalAmount')
+                //                 .html(
+                //                     PROPOSAL_JSON.currency.split('-')[1]
+                //                     + (Math
+                //                         .round(response.total_amount * 100) / 100));
+
+                //         },
+                //         error: function (error) {
+                //             console.log("error");
+                //         }
+
+                //     });
+            });
+    }
+
     const onDragEnd = (results: DropResult) => {
         console.log(results);
         const getDroppedDetails: string[] | any = results.destination?.droppableId.split("-");
@@ -292,54 +343,7 @@ const DesignBuilder = () => {
         // For dropping content from sidebar
         if (results.source.droppableId === "content-droppable" && results.type === "content") {
             if (results.draggableId === "column-0-product_list-0" && getDroppedDetails) {
-                PARENT.Engagebay_Proposal_Router_Utils.addEditProducts(
-                    PROPOSAL_JSON, function (updatedProposalJSON: contentContentOptions) {
-                        setProposalProducts(updatedProposalJSON);
-                        console.log(updatedProposalJSON);
-                        console.log(PROPOSAL_JSON);
-
-                        dropContents(results, getDroppedDetails)
-
-                        //fillProductList($container);
-                        // Fetch proposla amount
-                        getReq("/rest/api/panel/proposals/get-amount", {
-                            'product_details': JSON.stringify(updatedProposalJSON?.proposal_products),
-                            'currency': PARENT.currentUserPrefs.get("currency"),
-                        }).then((response: any) => {
-
-                            console.log(response.data.total_amount)
-                            setTotalAmount(response.data.total_amount);
-
-
-                        }).catch((e) => {
-                            // setLoading(false);
-                        });
-                        // $
-                        //     .ajax({
-                        //         type: "GET",
-                        //         data: {
-                        //             'product_details': JSON.stringify(PROPOSAL_JSON.proposal_products),
-                        //             'currency': PROPOSAL_JSON.currency,
-                        //             'discount': PROPOSAL_JSON.proposal_products.discount
-                        //         },
-                        //         dataType: 'json',
-                        //         url: "/rest/api/panel/proposals/get-amount",
-                        //         success: function (response) {
-
-                        //             $container
-                        //                 .find('#calculatedProposalTotalAmount')
-                        //                 .html(
-                        //                     PROPOSAL_JSON.currency.split('-')[1]
-                        //                     + (Math
-                        //                         .round(response.total_amount * 100) / 100));
-
-                        //         },
-                        //         error: function (error) {
-                        //             console.log("error");
-                        //         }
-
-                        //     });
-                    });
+                addEditProducts(results, getDroppedDetails);
                 return;
 
             }
@@ -732,7 +736,7 @@ const DesignBuilder = () => {
                                             {...provided.droppableProps}
                                             ref={provided.innerRef}
                                         >
-                                            <Editor setShowRightSettings={setShowRightSettings} removeTransform={removeTransform} previewDevicetype={previewDevicetype} snapshot={snapshotDroppable} getDraggedElement={getDraggedElement} placeholderProps={placeholderProps} setShowBodySetting={setShowBodySetting} proposalProducts={proposalProducts} totalAmount={totalAmount} />
+                                            <Editor setShowRightSettings={setShowRightSettings} removeTransform={removeTransform} previewDevicetype={previewDevicetype} snapshot={snapshotDroppable} getDraggedElement={getDraggedElement} placeholderProps={placeholderProps} setShowBodySetting={setShowBodySetting} proposalProducts={proposalProducts} totalAmount={totalAmount} addEditProducts={addEditProducts} />
                                             {provided.placeholder}
                                         </div>
                                     )}

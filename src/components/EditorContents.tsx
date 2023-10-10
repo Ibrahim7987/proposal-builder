@@ -2,7 +2,7 @@ import { Draggable } from "react-beautiful-dnd";
 import { EditorContentprops } from "../models/GeneralModels";
 import React from "react"
 function EditorContents(props: EditorContentprops) {
-    const { content, contentIndex, rowIndex, columnIndex, editActiveElement, contextData, deleteContent, cloneContent, handleContentType } = props
+    const { content, contentIndex, rowIndex, columnIndex, editActiveElement, contextData, deleteContent, cloneContent, handleContentType, addEditProducts } = props
     const contentStyles: any = {
         // zIndex: 1,
         backgroundColor: `${content.options?.backgroundColor}`,
@@ -55,6 +55,17 @@ function EditorContents(props: EditorContentprops) {
                                         </g>
                                     </svg>
                                 </span>
+                                {content.type == "product_list" ?
+                                    <span className="product-icon cursor-pointer powertip" title="Edit Products"
+                                        onClick={(e) => addEditProducts(null, null)}
+                                    >
+                                        <svg className="eb-icon-svg" height={16} width={16} version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 50 50">
+                                            <g>
+                                                <path className="st0" d="M904.2,610.4h-8.7h-13.2h-8.7c-2.6,0-4.7,2.1-4.7,4.7v30.6c0,2.6,2.1,4.7,4.7,4.7h30.6c2.6,0,4.7-2.1,4.7-4.7 v-30.6C908.9,612.5,906.7,610.4,904.2,610.4z M894.5,612.3V626l-5.1-3.7c-0.2-0.1-0.4-0.2-0.6-0.2c-0.2,0-0.4,0.1-0.6,0.2l-5.1,3.7 v-13.7H894.5z M907,645.7c0,1.5-1.3,2.8-2.8,2.8h-30.6c-1.5,0-2.8-1.3-2.8-2.8v-30.6c0-1.5,1.3-2.8,2.8-2.8h7.8v15.6 c0,0.4,0.2,0.7,0.5,0.8c0.3,0.2,0.7,0.1,1-0.1l6-4.4l6,4.4c0.2,0.1,0.4,0.2,0.6,0.2c0.1,0,0.3,0,0.4-0.1c0.3-0.2,0.5-0.5,0.5-0.8 v-15.6h7.8c1.5,0,2.8,1.3,2.8,2.8V645.7z"></path>
+                                                <path className="st0" d="M40.5,4.8h-8.7H18.6H9.9c-2.6,0-4.7,2.1-4.7,4.7v30.6c0,2.6,2.1,4.7,4.7,4.7h30.6c2.6,0,4.7-2.1,4.7-4.7V9.5 C45.2,6.9,43.1,4.8,40.5,4.8z M30.8,6.7v13.7l-5.1-3.7c-0.2-0.1-0.4-0.2-0.6-0.2s-0.4,0.1-0.6,0.2l-5.1,3.7V6.7H30.8z M43.3,40.1 c0,1.5-1.3,2.8-2.8,2.8H9.9c-1.5,0-2.8-1.3-2.8-2.8V9.5c0-1.5,1.3-2.8,2.8-2.8h7.8v15.6c0,0.4,0.2,0.7,0.5,0.8 c0.3,0.2,0.7,0.1,1-0.1l6-4.4l6,4.4c0.2,0.1,0.4,0.2,0.6,0.2c0.1,0,0.3,0,0.4-0.1c0.3-0.2,0.5-0.5,0.5-0.8V6.7h7.8 c1.5,0,2.8,1.3,2.8,2.8V40.1z"></path>
+                                            </g>
+                                        </svg>
+                                    </span> : null}
                                 <span {...provided.dragHandleProps} className="drag-icon  cursor-pointer powertip" title="Drag">
                                     <svg height="16" width="16" data-v-32a717ef="" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 50 50" className="eb-icon-svg"><g> <g> <path className="st0" d="M24.8,42.9c-0.5,0-1-0.4-1-1V5.7c0-0.5,0.4-1,1-1s1,0.4,1,1V42C25.7,42.5,25.3,42.9,24.8,42.9z"></path> </g> <g> <path className="st0" d="M24.8,44.7c-0.2,0-0.5-0.1-0.7-0.3l-6.2-6.2c-0.4-0.4-0.4-1,0-1.3c0.4-0.4,1-0.4,1.3,0l5.5,5.5l5.5-5.5 c0.4-0.4,1-0.4,1.3,0c0.4,0.4,0.4,1,0,1.3l-6.2,6.2C25.3,44.6,25,44.7,24.8,44.7z"></path> </g> <g> <path className="st0" d="M18.6,12.8c-0.2,0-0.5-0.1-0.7-0.3c-0.4-0.4-0.4-1,0-1.3L24.1,5c0.4-0.4,1-0.4,1.3,0l6.2,6.2 c0.4,0.4,0.4,1,0,1.3c-0.4,0.4-1,0.4-1.3,0L24.8,7l-5.5,5.5C19.1,12.7,18.8,12.8,18.6,12.8z"></path> </g> </g> <g> <g> <path className="st0" d="M43.8,25.7H7.5c-0.5,0-1-0.4-1-1s0.4-1,1-1h36.3c0.5,0,1,0.4,1,1S44.3,25.7,43.8,25.7z"></path> </g> <g> <path className="st0" d="M11.9,31.9c-0.2,0-0.5-0.1-0.7-0.3l-6.2-6.2c-0.4-0.4-0.4-1,0-1.3l6.2-6.2c0.4-0.4,1-0.4,1.3,0s0.4,1,0,1.3 l-5.5,5.5l5.5,5.5c0.4,0.4,0.4,1,0,1.3C12.4,31.8,12.2,31.9,11.9,31.9z"></path> </g> <g> <path className="st0" d="M37.6,31.9c-0.2,0-0.5-0.1-0.7-0.3c-0.4-0.4-0.4-1,0-1.3l5.5-5.5L37,19.2c-0.4-0.4-0.4-1,0-1.3 c0.4-0.4,1-0.4,1.3,0l6.2,6.2c0.4,0.4,0.4,1,0,1.3l-6.2,6.2C38.1,31.8,37.9,31.9,37.6,31.9z"></path> </g> </g></svg>
                                 </span>

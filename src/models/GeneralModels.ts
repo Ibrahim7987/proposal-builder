@@ -2,6 +2,7 @@ import { Dispatch, createContext } from "react"
 import { ContentPayload, contentContentOptions, failureTemplatePayload, fieldsPayload, stepsPayload, successTemplatePayload } from "./ContentModels"
 import { BorderPayload, FontPayload } from "./styleModels"
 import { BodySettingOptionsPayload } from "./DesignModels"
+import { DropResult } from "react-beautiful-dnd"
 
 export const ProposalBuilderContext = createContext({
     activeElement: {} as ActiveElementType,
@@ -135,7 +136,7 @@ export type EditorContentprops = {
     editActiveElement: (event: any, type: string, id: string, isEditingModule: boolean, formSubComponent?: fieldsPayload, formSubComponentType?: string) => {},
     deleteContent: (rowIndex: number, columnIndex: number, contentIndex: number) => {},
     handleContentType: (content: ContentPayload) => {},
-
+    addEditProducts: (results: DropResult | any, getDroppedDetails: string[] | any) => void
 }
 
 export type ColumnTypes = {
@@ -168,7 +169,8 @@ export type EditorArray = {
     removeTransform: boolean
     getDraggedElement: string
     proposalProducts: contentContentOptions;
-    totalAmount: number
+    totalAmount: number,
+    addEditProducts: (results: DropResult | any, getDroppedDetails: string[] | any) => void
 }
 
 export type SectionPayload = {

@@ -17,11 +17,12 @@ import Product from './contents/Product';
 import uuid from 'react-uuid';
 import { preProcessSections } from '../preProcessor';
 import { saveBlock } from '../Utils';
+import { PROPOSAL_JSON } from '../Globals';
 
 const Editor = (props: EditorArray) => {
 
     const contextData = useContext<ProposalBuilderContextPayload>(ProposalBuilderContext);
-    const { snapshot, placeholderProps, previewDevicetype, setShowBodySetting, removeTransform, getDraggedElement, setShowRightSettings, proposalProducts, totalAmount } = props
+    const { snapshot, placeholderProps, previewDevicetype, setShowBodySetting, removeTransform, getDraggedElement, setShowRightSettings, proposalProducts, totalAmount, addEditProducts } = props
 
 
     function editActiveElement(event: any, type: string, id: string, isEditingModule: boolean, formSubComponent?: any, formSubComponentType?: string) {
@@ -56,6 +57,9 @@ const Editor = (props: EditorArray) => {
                 }
 
                 const tempElement = contextData.proposalTemplateJSON.elements
+                if (tempElement[rowIndex].columns[columnIndex].contents[contentIndex].type == "product_list") {
+                    PROPOSAL_JSON.proposal_products = []
+                }
                 tempElement[rowIndex].columns[columnIndex].contents.splice(contentIndex, 1)
                 contextData.updateBuilderData(tempElement, contextData.proposalTemplateJSON.proposalSettings)
                 contextData.setActiveElement({ ...activeElementObj })
@@ -303,7 +307,7 @@ const Editor = (props: EditorArray) => {
                                                                                                     {col.contents.map((content: ContentPayload, contentIndex: number) => {
                                                                                                         return (
                                                                                                             <>
-                                                                                                                <EditorContents cloneContent={cloneContent} editActiveElement={editActiveElement} deleteContent={deleteContent} content={content} contentIndex={contentIndex} rowIndex={rowIndex} handleContentType={handleContentType} columnIndex={columnIndex} contextData={contextData} />
+                                                                                                                <EditorContents cloneContent={cloneContent} editActiveElement={editActiveElement} deleteContent={deleteContent} content={content} contentIndex={contentIndex} rowIndex={rowIndex} handleContentType={handleContentType} columnIndex={columnIndex} contextData={contextData} addEditProducts={addEditProducts} />
                                                                                                             </>
                                                                                                         )
                                                                                                     })}
