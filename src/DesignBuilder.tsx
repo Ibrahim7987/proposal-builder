@@ -9,7 +9,7 @@ import Sidebar from './components/Sidebar';
 import ContentStyleEditor from './components/ContentStyleEditor';
 import BodySetting from './components/BodySetting';
 import { BodySettingOptionsPayload } from './models/DesignModels';
-import { updateProposalTemplateJson } from './Utils';
+import { getProductContent, updateProposalTemplateJson } from './Utils';
 import { Disclosure } from '@headlessui/react'
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
 import Settings from './proposal-sections/Settings'
@@ -130,6 +130,21 @@ const DesignBuilder = () => {
         updateProposalTemplateJson("elements", JSON.parse(actionHistory[newPos].elements), proposalTemplateJSON, setProposalTemplateJSON)
         updateProposalTemplateJson("proposalSettings", JSON.parse(actionHistory[newPos].proposalSettings), proposalTemplateJSON, setProposalTemplateJSON)
         setActiveElement(initialActiveElement)
+        let productContent = getProductContent(proposalTemplateJSON);
+        PROPOSAL_JSON.proposal_products = productContent?.options.proposal_products ? productContent?.options.proposal_products : []
+        // Fetch proposla amount
+        getReq("/rest/api/panel/proposals/get-amount", {
+            'product_details': JSON.stringify(productContent?.options.proposal_products),
+            'currency': PARENT.currentUserPrefs.get("currency"),
+        }).then((response: any) => {
+
+            console.log(response.data.total_amount)
+            setTotalAmount(response.data.total_amount);
+
+
+        }).catch((e) => {
+            // setLoading(false);
+        });
     }
 
     const droppableStyles: any = {
@@ -177,6 +192,20 @@ const DesignBuilder = () => {
         updateProposalTemplateJson("elements", JSON.parse(actionHistory[currentPosition].elements), proposalTemplateJSON, setProposalTemplateJSON)
         updateProposalTemplateJson("proposalSettings", JSON.parse(actionHistory[currentPosition].proposalSettings), proposalTemplateJSON, setProposalTemplateJSON)
         setActiveElement(initialActiveElement)
+        let productContent = getProductContent(proposalTemplateJSON);
+        PROPOSAL_JSON.proposal_products = productContent?.options.proposal_products ? productContent?.options.proposal_products : []
+        getReq("/rest/api/panel/proposals/get-amount", {
+            'product_details': JSON.stringify(productContent?.options.proposal_products),
+            'currency': PARENT.currentUserPrefs.get("currency"),
+        }).then((response: any) => {
+
+            console.log(response.data.total_amount)
+            setTotalAmount(response.data.total_amount);
+
+
+        }).catch((e) => {
+            // setLoading(false);
+        });
     }
 
 
@@ -281,6 +310,11 @@ const DesignBuilder = () => {
                 console.log(PROPOSAL_JSON);
                 if (results)
                     dropContents(results, getDroppedDetails)
+                else {
+                    let productContent = getProductContent(proposalTemplateJSON);
+                    productContent.options.proposal_products = PROPOSAL_JSON.proposal_products
+                    updateHistroy(proposalTemplateJSON.elements, proposalTemplateJSON.proposalSettings)
+                }
 
                 //fillProductList($container);
                 // Fetch proposla amount

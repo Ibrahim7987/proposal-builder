@@ -1,7 +1,7 @@
 import { Dispatch } from "react";
 import { PARENT } from "./Globals";
 import { ContentPayload, fieldsPayload, stepsPayload } from "./models/ContentModels";
-import { ActiveElementType, ColumnPayload, ProposalBuilderContextPayload } from "./models/GeneralModels";
+import { ActiveElementType, ColumnPayload, ProposalBuilderContextPayload, SectionPayload } from "./models/GeneralModels";
 import { LinkSettings } from "./models/styleModels";
 import {
     Collapse,
@@ -307,4 +307,14 @@ export const selectImage = (allowedFileTypes: string[], callback: Function) => {
 
     }).search();
 
+}
+
+export const getProductContent = (proposalTemplateJSON: any) => {
+    return proposalTemplateJSON.elements.find((element: SectionPayload) =>
+        element.columns.find((column) =>
+            column.contents.find((content) =>
+                content.type == "product_list"))).columns.find((column: ColumnPayload) =>
+                    column.contents.find((content) =>
+                        content.type == "product_list")).contents.find((content: ContentPayload) =>
+                            content.type == "product_list")
 }
