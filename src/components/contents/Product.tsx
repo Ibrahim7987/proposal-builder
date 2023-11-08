@@ -9,6 +9,21 @@ const Product = (props: ProductProps) => {
 
     const { proposalProducts, totalAmount, content, updateContent, editActiveElement, contextData } = props
 
+    const imgStyles = {
+        width: '2.75rem',
+        height: '2.75rem',
+        borderRadius: '9999px'
+    }
+
+    const descStyles: any = {
+        color: 'rgba(107, 114, 128, 1)',
+        marginTop: '0.25rem',
+        display: '-webkit-box',
+        WebkitLineClamp: '2',
+        WebkitBoxOrient: 'vertical',
+        overflow: 'hidden',
+        whiteSpace: 'pre-line'
+    }
     useEffect(() => {
         if (proposalProducts?.proposal_products.length > 0)
             content.options.proposal_products = proposalProducts?.proposal_products;
@@ -114,119 +129,115 @@ const Product = (props: ProductProps) => {
     return (
         <div>
             {content.options.proposal_products?.length > 0 ?
-                <div className="px-4 sm:px-6 lg:px-8">
-                    <div className="mt-8 flow-root">
-                        <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                            <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                                <table className="min-w-full divide-y divide-gray-300">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">
-                                                <div style={{
-                                                    minWidth: "max-content"
-                                                }}>
-                                                    <TinyMCEEditor onChangeEditor={onChangeText0} content={content.options.innerConetents[0]} />
-                                                </div>
-                                            </th>
-                                            <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                                <div style={{
-                                                    minWidth: "max-content"
-                                                }}>
-                                                    <TinyMCEEditor onChangeEditor={onChangeText1} content={content.options.innerConetents[1]} />
-                                                </div>
-                                            </th>
-                                            <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                                <div style={{
-                                                    minWidth: "max-content"
-                                                }}>
-                                                    <TinyMCEEditor onChangeEditor={onChangeText2} content={content.options.innerConetents[2]} />
-                                                </div>
-                                            </th>
-                                            <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                                <div style={{
-                                                    minWidth: "max-content"
-                                                }}>
-                                                    <TinyMCEEditor onChangeEditor={onChangeText3} content={content.options.innerConetents[3]} />
-                                                </div>
-                                            </th>
-                                            <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-0">
-                                                <div style={{
-                                                    minWidth: "max-content"
-                                                }}>
-                                                    <TinyMCEEditor onChangeEditor={onChangeText4} content={content.options.innerConetents[4]} />
-                                                </div>                                            </th>
-                                            <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-0">
-                                                <div style={{
-                                                    minWidth: "max-content"
-                                                }}>
-                                                    <TinyMCEEditor onChangeEditor={onChangeText5} content={content.options.innerConetents[5]} />
-                                                </div>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="divide-y divide-gray-200">
-                                        {content.options.proposal_products?.map((proposal_product: any, index: number) => (
-                                            <tr key={proposal_product.id}>
-                                                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
+                <div className="ppx-4 sm-ppx-6 lg-ppx-8">
+                    <div className="-pmx-4 -pmy-2 overflow-px-auto sm--pmx-6 lg--pmx-8">
+                        <div className="ring-1 ring-gray-300 d-inline-block min-w-100 ppy-2 v-align-middle sm-ppx-6 lg-ppx-8">
+                            <table className="min-w-100 divide-py divide-gray-300">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" className="ppx-3 ppy-3.5" style={{ fontWeight: 600, fontSize: "0.875rem", lineHeight: "1.25rem" }}>
+                                            <div style={{
+                                                minWidth: "max-content"
+                                            }}>
+                                                <TinyMCEEditor onChangeEditor={onChangeText0} content={content.options.innerConetents[0]} />
+                                            </div>
+                                        </th>
+                                        <th scope="col" className="ppx-3 ppy-3.5" style={{ fontWeight: 600, fontSize: "0.875rem", lineHeight: "1.25rem" }}>
+                                            <div style={{
+                                                minWidth: "max-content"
+                                            }}>
+                                                <TinyMCEEditor onChangeEditor={onChangeText1} content={content.options.innerConetents[1]} />
+                                            </div>
+                                        </th>
+                                        <th scope="col" className="ppx-3 ppy-3.5" style={{ fontWeight: 600, fontSize: "0.875rem", lineHeight: "1.25rem" }}>
+                                            <div style={{
+                                                minWidth: "max-content"
+                                            }}>
+                                                <TinyMCEEditor onChangeEditor={onChangeText2} content={content.options.innerConetents[2]} />
+                                            </div>
+                                        </th>
+                                        <th scope="col" className="ppx-3 ppy-3.5 " style={{ fontWeight: 600, fontSize: "0.875rem", lineHeight: "1.25rem" }}>
+                                            <div style={{
+                                                minWidth: "max-content"
+                                            }}>
+                                                <TinyMCEEditor onChangeEditor={onChangeText3} content={content.options.innerConetents[3]} />
+                                            </div>
+                                        </th>
+                                        <th scope="col" className="ppx-3 ppy-3.5" style={{ fontWeight: 600, fontSize: "0.875rem", lineHeight: "1.25rem" }}>
+                                            <div style={{
+                                                minWidth: "max-content"
+                                            }}>
+                                                <TinyMCEEditor onChangeEditor={onChangeText4} content={content.options.innerConetents[4]} />
+                                            </div>                                            </th>
+                                        <th scope="col" className="ppx-3 ppy-3.5" style={{ fontWeight: 600, fontSize: "0.875rem", lineHeight: "1.25rem" }}>
+                                            <div style={{
+                                                minWidth: "max-content"
+                                            }}>
+                                                <TinyMCEEditor onChangeEditor={onChangeText5} content={content.options.innerConetents[5]} />
+                                            </div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-py divide-gray-200">
+                                    {content.options.proposal_products?.map((proposal_product: any, index: number) => (
+                                        <tr key={proposal_product.id}>
+                                            <td className=" ppy-4 ppx-3 " style={{ fontSize: "0.875rem", lineHeight: "1.25rem" }}>
 
-                                                    <div className="flex items-center">
-                                                        <div className={`${contextData.activeElement.elementId === proposal_product.id ? "selected-element active" : ""} h-11 w-11 flex-shrink-0`}
-                                                            onMouseEnter={() => contextData.setOnHover({ ...contextData.onHover, onSectionHover: false, onContentHover: true })}
-                                                            onMouseLeave={() => contextData.setOnHover({ ...contextData.onHover, onSectionHover: true, onContentHover: false })}
-                                                            onClick={(e) => content.type === "forms" ? console.log("") : editActiveElement(e, "content", proposal_product.id, true)}>
-                                                            <img className="h-11 w-11 rounded-full" src={proposal_product.image_url} alt="" />
-                                                        </div>
-                                                        <div className="ml-4">
-                                                            <div className="font-medium text-gray-900 text-truncate" style={{
-                                                                maxWidth: "10rem"
-                                                            }}>{proposal_product.name}</div>
-                                                            <div className="mt-1 text-gray-500" style={{
-                                                                display: "-webkit-box",
-                                                                WebkitLineClamp: "2",
-                                                                WebkitBoxOrient: "vertical",
-                                                                overflow: "hidden",
-                                                                whiteSpace: "pre-line"
-                                                            }}>{proposal_product.description}</div>
-                                                        </div>
+                                                <div style={{ alignItems: "center", display: "flex" }}>
+                                                    <div className={`${contextData.activeElement.elementId === proposal_product.id ? "selected-element active" : ""}`} style={imgStyles}
+                                                        onMouseEnter={() => contextData.setOnHover({ ...contextData.onHover, onSectionHover: false, onContentHover: true })}
+                                                        onMouseLeave={() => contextData.setOnHover({ ...contextData.onHover, onSectionHover: true, onContentHover: false })}
+                                                        onClick={(e) => content.type === "forms" ? console.log("") : editActiveElement(e, "content", proposal_product.id, true)}>
+                                                        <img style={imgStyles} src={proposal_product.image_url} alt="" />
                                                     </div>
-                                                </td>
-                                                <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                                                    <div className="text-gray-900">{`${proposal_product.quantity ? proposal_product.quantity : '-'}`}</div>
-                                                </td>
-                                                <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                                                    <div className="text-gray-900">{`${proposal_product.price ? proposal_product.price : '-'}`}</div>
-                                                </td>
-                                                <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                                                    {`${proposal_product.discount ? proposal_product.discount : '-'}`}
-                                                </td>
-                                                <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                                                    {`${proposal_product.tax_rate ? proposal_product.tax_rate : '-'}`}
-                                                </td>
-                                                <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                                                    {getCurrencySymbol(proposal_product.currency)}{calculateProductActualAmountFromDiscount(proposal_product.price, proposal_product.discount, proposal_product.discount_type, proposal_product.properties, proposal_product.quantity)}</td>
+                                                    <div style={{ marginLeft: "1rem" }}>
+                                                        <div style={{
+                                                            maxWidth: "10rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
+                                                        }}>{proposal_product.name}</div>
+                                                        <div style={descStyles}
+                                                        >{proposal_product.description}</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td className=" ppx-3 ppy-4 " style={{ fontSize: "0.875rem", lineHeight: "1.25rem" }}>
+                                                <div >{`${proposal_product.quantity ? proposal_product.quantity : '-'}`}</div>
+                                            </td>
+                                            <td className=" ppx-3 ppy-4 " style={{ fontSize: "0.875rem", lineHeight: "1.25rem" }}>
+                                                <div >{`${proposal_product.price ? proposal_product.price : '-'}`}</div>
+                                            </td>
+                                            <td className=" ppx-3 ppy-4 " style={{ fontSize: "0.875rem", lineHeight: "1.25rem" }}>
+                                                {`${proposal_product.discount ? proposal_product.discount : '-'}`}
+                                            </td>
+                                            <td className=" ppx-3 ppy-4 " style={{ fontSize: "0.875rem", lineHeight: "1.25rem" }}>
+                                                {`${proposal_product.tax_rate ? proposal_product.tax_rate : '-'}`}
+                                            </td>
+                                            <td className=" ppx-3 ppy-4 " style={{ fontSize: "0.875rem", lineHeight: "1.25rem" }}>
+                                                {getCurrencySymbol(proposal_product.currency)}{calculateProductActualAmountFromDiscount(proposal_product.price, proposal_product.discount, proposal_product.discount_type, proposal_product.properties, proposal_product.quantity)}</td>
 
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                    <tfoot>
-
-
-                                        <tr>
-                                            <th
-                                                scope="row"
-                                                colSpan={5}
-                                                className=" text-right text-sm font-semibold text-gray-900 sm:pr-0 whitespace-nowrap px-3 py-3 "
-                                            >
-                                                Total:
-                                            </th>
-                                            <th scope="row" className="pl-4 pr-3 pt-4 text-left text-sm font-semibold text-gray-900 sm:hidden">
-                                                Total
-                                            </th>
-                                            <td className=" text-left text-sm font-semibold text-gray-900 sm:pr-0 whitespace-nowrap px-3 py-3 ">{getCurrencySymbol(content.options.currency)} {roundNumberBy2(totalAmount)}</td>
                                         </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
+                                    ))}
+                                </tbody>
+                                <tfoot>
+
+
+                                    <tr>
+                                        <th
+                                            scope="row"
+                                            colSpan={5}
+                                            className=" ppx-3 ppy-3 "
+                                            style={{ textAlign: "right", fontWeight: 600, fontSize: "0.875rem", lineHeight: "1.25rem" }}
+                                        >
+                                            Total:
+                                        </th>
+
+                                        <td className=" ppx-3 ppy-3 "
+                                            style={{ textAlign: "left", fontWeight: 600, fontSize: "0.875rem", lineHeight: "1.25rem" }}
+                                        >
+                                            {getCurrencySymbol(content.options.currency)} {roundNumberBy2(totalAmount)}
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
                         </div>
                     </div>
                 </div>

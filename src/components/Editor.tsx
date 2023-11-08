@@ -24,6 +24,15 @@ const Editor = (props: EditorArray) => {
     const contextData = useContext<ProposalBuilderContextPayload>(ProposalBuilderContext);
     const { snapshot, placeholderProps, previewDevicetype, setShowBodySetting, removeTransform, getDraggedElement, setShowRightSettings, proposalProducts, totalAmount, addEditProducts } = props
 
+    const emptyContentStyles: any = {
+        textAlign: "center",
+        borderColor: "rgba(186, 230, 253, 1)",
+        borderStyle: "dashed",
+        display: "flex",
+        height: "6rem",
+        justifyContent: "center",
+        alignItems: "center",
+    }
 
     function editActiveElement(event: any, type: string, id: string, isEditingModule: boolean, formSubComponent?: any, formSubComponentType?: string) {
 
@@ -182,29 +191,10 @@ const Editor = (props: EditorArray) => {
         return contextData.proposalTemplateJSON.elements
     }
 
-    const testArray: any = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
 
     return (
         <>
-            {/* {testArray?.map((num: number, index: number) => {
-                return (
 
-
-                    <Draggable draggableId={`editor-${num}`} index={index} key={num}>
-                        {(provided) => (
-                            <div
-                                {...provided.draggableProps}
-                                {...provided.dragHandleProps}
-                                ref={provided.innerRef}
-                                className='grid-view-panel'
-                            >{num}</div>
-                        )}
-                    </Draggable>
-
-
-                )
-
-            })} */}
 
             {contextData.proposalTemplateJSON.elements.length ? (
                 <>
@@ -256,7 +246,7 @@ const Editor = (props: EditorArray) => {
                                             margin: "auto", padding: row.options.margin ? `${row.options.margin[0]}px ${row.options.margin[1]}px ${row.options.margin[2]}px ${row.options.margin[3]}px` : "",
                                         }}>
                                             <div style={customWidthStylesDiv} className="editor-row section-setting scroll-container">
-                                                <div className="w-100 d-flex" style={{ minHeight: "11px", paddingTop: `${row.options.padding[0]}px`, paddingRight: `${row.options.padding[1]}px`, paddingBottom: `${row.options.padding[2]}px`, paddingLeft: `${row.options.padding[3]}px`, }}
+                                                <div className="row-contents" style={{ minHeight: "11px", paddingTop: `${row.options.padding[0]}px`, paddingRight: `${row.options.padding[1]}px`, paddingBottom: `${row.options.padding[2]}px`, paddingLeft: `${row.options.padding[3]}px`, }}
                                                 >
                                                     {row.columns.map((col: ColumnPayload, columnIndex: number) => {
                                                         const columnStyles: {} = {
@@ -291,7 +281,7 @@ const Editor = (props: EditorArray) => {
 
 
                                                         return (<div style={{ width: `${col.columnWidthPercentage}%`, maxWidth: `${col.columnWidthPercentage}%`, verticalAlign: col.options.verticalAlign }}>
-                                                            <div key={columnIndex} style={{ width: "100%" }} className="table-fixed-layout-child" >
+                                                            <div key={columnIndex} style={{ width: "100%" }} >
                                                                 <div style={{ width: "100%" }}>
                                                                     <div style={columnStyles}>
                                                                         <div style={innerStyles}>
@@ -331,7 +321,8 @@ const Editor = (props: EditorArray) => {
                                                                                                 :
                                                                                                 <>
                                                                                                     <div >
-                                                                                                        <div className={`border-dashed ${columnIndex == 0 ? "border-2" : "border-y-2 border-e-2"} ${doNeighBourHasContents(columnIndex) ? "border-s-2" : ""} border-sky-200 h-24 justify-center items-center flex text-center`}>
+                                                                                                        <div className={` ${columnIndex == 0 ? "border-2" : "border-y-2 border-e-2"} ${doNeighBourHasContents(columnIndex) ? "border-s-2" : ""} `}
+                                                                                                            style={emptyContentStyles}>
                                                                                                             Drop content here
                                                                                                         </div>
                                                                                                     </div>
@@ -407,39 +398,43 @@ const Editor = (props: EditorArray) => {
 
                                 </div>
                             )}
-                        </Draggable>)
+                        </Draggable >)
                     })}
                     {/* {provided.placeholder} */}
-                    {snapshot.isDraggingOver && removeTransform ? (
-                        <div className="placeholder-container" style={{
-                            position: "absolute",
-                            top: placeholderProps.clientY,
-                            left: 0,
-                            width: `${contextData.proposalTemplateJSON.proposalSettings.contentWidth}px`,
-                            maxHeight: placeholderProps.clientHeight,
-                            margin: "auto"
-                        }}
-                        >
-                            <div className="position-relative">
-                                <span className="placeholder-styles">Drop it here</span>
+                    {
+                        snapshot.isDraggingOver && removeTransform ? (
+                            <div className="placeholder-container" style={{
+                                position: "absolute",
+                                top: placeholderProps.clientY,
+                                left: 0,
+                                width: `${contextData.proposalTemplateJSON.proposalSettings.contentWidth}px`,
+                                maxHeight: placeholderProps.clientHeight,
+                                margin: "auto"
+                            }}
+                            >
+                                <div className="position-relative">
+                                    <span className="placeholder-styles">Drop it here</span>
+                                </div>
                             </div>
-                        </div>
-                    ) : <></>}
-                    {snapshot.isDraggingOver && !removeTransform ? (
-                        <div style={{
-                            position: "absolute",
-                            top: placeholderProps.clientY,
-                            left: 0,
-                            right: 0,
-                            margin: "auto",
-                            opacity: "0.8"
-                        }}
-                        >
-                            <div className="position-relative">
-                                <div dangerouslySetInnerHTML={{ __html: getDraggedElement.toString() }} />
+                        ) : <></>
+                    }
+                    {
+                        snapshot.isDraggingOver && !removeTransform ? (
+                            <div style={{
+                                position: "absolute",
+                                top: placeholderProps.clientY,
+                                left: 0,
+                                right: 0,
+                                margin: "auto",
+                                opacity: "0.8"
+                            }}
+                            >
+                                <div className="position-relative">
+                                    <div dangerouslySetInnerHTML={{ __html: getDraggedElement.toString() }} />
+                                </div>
                             </div>
-                        </div>
-                    ) : <></>}
+                        ) : <></>
+                    }
                 </>
             ) : <>
                 <div className="bg-white p-3 border-radius-1" style={{ maxWidth: `${contextData.proposalTemplateJSON.proposalSettings.contentWidth}px`, margin: "auto" }}>

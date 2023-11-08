@@ -1,5 +1,6 @@
 import { Dispatch } from "react";
 import { PARENT } from "./Globals";
+import $ from 'jquery';
 import { ContentPayload, fieldsPayload, stepsPayload } from "./models/ContentModels";
 import { ActiveElementType, ColumnPayload, ProposalBuilderContextPayload, SectionPayload } from "./models/GeneralModels";
 import { LinkSettings } from "./models/styleModels";
@@ -317,4 +318,16 @@ export const getProductContent = (proposalTemplateJSON: any) => {
                     column.contents.find((content) =>
                         content.type == "product_list")).contents.find((content: ContentPayload) =>
                             content.type == "product_list")
+}
+
+export const getSavedContent = () => {
+    var content = [];
+    var $proposalBuilderContent: any = $(".proposal-builder-content")
+    $proposalBuilderContent.find('.mce-content-body').removeClass('mce-content-body').removeAttr('contenteditable').removeAttr('id')
+    $proposalBuilderContent.find('.content-action-icons').remove()
+    $proposalBuilderContent.find('.section-action-icons').remove()
+    $proposalBuilderContent.find('.content-container-wrapper').removeClass("selected-content active content-draggable")
+    console.log($proposalBuilderContent[0].outerHTML)
+    content.push($proposalBuilderContent[0].outerHTML);
+    return content
 }

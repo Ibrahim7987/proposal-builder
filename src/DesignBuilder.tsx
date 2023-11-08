@@ -9,7 +9,7 @@ import Sidebar from './components/Sidebar';
 import ContentStyleEditor from './components/ContentStyleEditor';
 import BodySetting from './components/BodySetting';
 import { BodySettingOptionsPayload } from './models/DesignModels';
-import { getProductContent, updateProposalTemplateJson } from './Utils';
+import { getProductContent, getSavedContent, updateProposalTemplateJson } from './Utils';
 import { Disclosure } from '@headlessui/react'
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
 import Settings from './proposal-sections/Settings'
@@ -145,6 +145,38 @@ const DesignBuilder = () => {
         }).catch((e) => {
             // setLoading(false);
         });
+    }
+
+    const saveProposal = () => {
+        var content = getSavedContent();
+        if (!content || content.length == 0) {
+            PARENT
+                .notifySuccessErrorInfo(
+                    {
+                        message: 'Nothing to save, Please add some element',
+                        alert_type: "danger"
+                    }, 6000);
+
+            return false;
+        }
+        var json = (PROPOSAL_JSON) ? PROPOSAL_JSON : {};
+        json['content'] = JSON.stringify(content);
+        if (PROPOSAL_JSON.proposal_products.length == 0) {
+
+            PARENT
+                .notifySuccessErrorInfo(
+                    {
+                        message: 'Add atleast one product to the proposal',
+                        alert_type: "danger"
+                    }, 6000);
+
+            return;
+        }
+        PARENT.Engagebay_Proposal_Router_Utils
+            .addProposalFromBuilder(json, function (
+                proposalJSON: any) {
+                console.log('proposalJSON', proposalJSON);
+            });
     }
 
     const droppableStyles: any = {
@@ -547,7 +579,7 @@ const DesignBuilder = () => {
                                         <button
                                             type="button"
                                             className="rounded-md bg-blue-600 ml-3 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-                                            onClick={() => setSaveModal(true)}
+                                            onClick={() => saveProposal()}
                                         >
                                             save
                                         </button>
@@ -763,7 +795,7 @@ const DesignBuilder = () => {
                             </Droppable>
                         </div>
                         <div className="col-span-3 vh-100">
-                            <div className={removeTransform ? "section-container landingpage-builder-content remove-transform" : "section-container landingpage-builder-content"} style={droppableStyles}>
+                            <div className={removeTransform ? "section-container proposal-builder-content remove-transform" : "section-container proposal-builder-content"} style={droppableStyles}>
                                 <Droppable droppableId="editor">
                                     {(provided: DroppableProvided, snapshotDroppable: DroppableSnapshot) => (
                                         <div
