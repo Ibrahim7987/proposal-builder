@@ -12,7 +12,8 @@ const Product = (props: ProductProps) => {
     const imgStyles = {
         width: '2.75rem',
         height: '2.75rem',
-        borderRadius: '9999px'
+        borderRadius: '9999px',
+        minWidth: 'max-content'
     }
 
     const descStyles: any = {
@@ -200,19 +201,19 @@ const Product = (props: ProductProps) => {
                                                 </div>
                                             </td>
                                             <td className=" ppx-3 ppy-4 " style={{ fontSize: "0.875rem", lineHeight: "1.25rem" }}>
-                                                <div >{`${proposal_product.quantity ? proposal_product.quantity : '-'}`}</div>
+                                                <div style={{ width: "max-content" }}>{`${proposal_product.quantity ? proposal_product.quantity : '-'}`}</div>
                                             </td>
                                             <td className=" ppx-3 ppy-4 " style={{ fontSize: "0.875rem", lineHeight: "1.25rem" }}>
-                                                <div >{`${proposal_product.price ? proposal_product.price : '-'}`}</div>
+                                                <div style={{ width: "max-content" }}>{`${proposal_product.price ? proposal_product.price : '-'}`}</div>
                                             </td>
                                             <td className=" ppx-3 ppy-4 " style={{ fontSize: "0.875rem", lineHeight: "1.25rem" }}>
-                                                {`${proposal_product.discount ? proposal_product.discount : '-'}`}
+                                                <div style={{ width: "max-content" }}>{`${proposal_product.discount ? proposal_product.discount : '-'}`}</div>
                                             </td>
                                             <td className=" ppx-3 ppy-4 " style={{ fontSize: "0.875rem", lineHeight: "1.25rem" }}>
-                                                {`${proposal_product.tax_rate ? proposal_product.tax_rate : '-'}`}
+                                                <div style={{ width: "max-content" }}>{`${proposal_product.tax_rate ? proposal_product.tax_rate : '-'}`}</div>
                                             </td>
                                             <td className=" ppx-3 ppy-4 " style={{ fontSize: "0.875rem", lineHeight: "1.25rem" }}>
-                                                {getCurrencySymbol(proposal_product.currency)}{calculateProductActualAmountFromDiscount(proposal_product.price, proposal_product.discount, proposal_product.discount_type, proposal_product.properties, proposal_product.quantity)}</td>
+                                                <div style={{ width: "max-content" }}>{getCurrencySymbol(proposal_product.currency)} {calculateProductActualAmountFromDiscount(proposal_product.price, proposal_product.discount, proposal_product.discount_type, proposal_product.properties, proposal_product.quantity)}</div></td>
 
                                         </tr>
                                     ))}
@@ -233,7 +234,7 @@ const Product = (props: ProductProps) => {
                                         <td className=" ppx-3 ppy-3 "
                                             style={{ textAlign: "left", fontWeight: 600, fontSize: "0.875rem", lineHeight: "1.25rem" }}
                                         >
-                                            {getCurrencySymbol(content.options.currency)} {roundNumberBy2(totalAmount)}
+                                            <div style={{ width: "max-content" }}>{getCurrencySymbol(content.options.currency)} {roundNumberBy2(totalAmount)}</div>
                                         </td>
                                     </tr>
                                 </tfoot>
