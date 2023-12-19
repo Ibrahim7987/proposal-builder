@@ -32,7 +32,7 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
 import StaticContents from './json/StaticContents';
 import AddProduct from './Modals/AddProduct';
 import EditAndSaveProducts from './Modals/EditAndSaveProducts';
-import { PARENT, PREDESIGNED_TEMPLATE_NAME, PROPOSAL_JSON, PROPOSAL_TEMPLATE_ID } from './Globals';
+import { PARENT, PREDESIGNED_TEMPLATE_NAME, PROPOSAL_JSON, PROPOSAL_TEMPLATE_ID, id } from './Globals';
 import { contentContentOptions } from './models/ContentModels';
 import designedBlocks from './json/PredefinedBlocks';
 import { getReq } from './Requests';
@@ -69,7 +69,7 @@ const DesignBuilder = () => {
         formSubComponent: undefined
     }
 
-    const initialProposalTemplateJSON = {
+    const initialProposalTemplateJSON = id ? JSON.parse(PROPOSAL_JSON.proposal_misc_info) : {
         elements: editorJson,
         proposalSettings: proposalSettings,
         AMPMode: false,
@@ -109,7 +109,7 @@ const DesignBuilder = () => {
     const [showRightSettings, setShowRightSettings] = useState<string>("styles");
     const [getDraggedElement, setDraggedElement] = useState<string>("")
     const [confirmationModal, setConfirmationModal] = useState<any>(initialConfirmationModal);
-    const [proposalProducts, setProposalProducts] = useState<contentContentOptions>(Object);
+    const [proposalProducts, setProposalProducts] = useState<contentContentOptions>(id ? PROPOSAL_JSON : Object);
     const [totalAmount, setTotalAmount] = useState<number>(0);
     const [histroyPosition, setHistroyPosition] = useState<number>(-1)
     const [proposalTemplateJSON, setProposalTemplateJSON] = useState<any>(initialProposalTemplateJSON)
@@ -161,6 +161,7 @@ const DesignBuilder = () => {
         }
         var json = (PROPOSAL_JSON) ? PROPOSAL_JSON : {};
         json['content'] = JSON.stringify(content);
+        json['proposal_misc_info'] =  JSON.stringify(proposalTemplateJSON);
         if (PROPOSAL_JSON.proposal_products.length == 0) {
 
             PARENT
@@ -476,7 +477,7 @@ const DesignBuilder = () => {
                                 <div className="relative flex h-16 justify-between">
                                     <div className="hidden lg:relative lg:z-10 lg:ml-4 lg:flex lg:items-center">
                                         <span className="relative mr-4 flex-shrink-0">
-                                            <span title="Back" className="" >
+                                            <span title="Back" className="" onClick={() => PARENT.Engagebay_Proposal_Router_Utils.goBackFromDesigner(id)}>
                                                 {/* <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 50 50" ><path className="st0" d="M42.5,22.5H14.7l10.9-10.9c1-1,1-2.6,0-3.6c-1-1-2.6-1-3.6,0L5,25l17,17c0.5,0.5,1.1,0.7,1.8,0.7 s1.3-0.2,1.8-0.7c1-1,1-2.6,0-3.6L14.7,27.5h27.7c1.4,0,2.5-1.1,2.5-2.5C45,23.6,43.9,22.5,42.5,22.5z"></path>
                         </svg> */}
                                                 <svg className="eb-icon-svg" style={{ width: "16px", height: "16px" }} version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 50 50" >
