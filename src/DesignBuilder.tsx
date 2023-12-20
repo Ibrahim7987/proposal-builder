@@ -728,7 +728,7 @@ const DesignBuilder = () => {
                 <DragDropContext
                     onDragEnd={onDragEnd}
                     onDragUpdate={onDragUpdate}                >
-                    <div className="grid grid-cols-5 gap-4">
+                    <div className="grid grid-cols-5">
                         <div className="col-span-1 vh-100">
                             <div className="hidden sm:block">
                                 <div className="border-b border-gray-200">
@@ -813,7 +813,7 @@ const DesignBuilder = () => {
                         <div className="col-span-1 vh-100">
                             <div className="hidden sm:block">
                                 <div className="border-b border-gray-200">
-                                    <nav className="-mb-px flex space-x-8" aria-label="Tabs">
+                                    {/* <nav className="hidden lg:flex lg:space-x-8 lg:py-2" aria-label="Global">
 
                                         <a
                                             onClick={() => setShowRightSettings("contents")}
@@ -840,7 +840,41 @@ const DesignBuilder = () => {
 
                                             <span>Styles</span>
                                         </a>
-                                    </nav>
+                                    </nav> */}
+                                    <Disclosure as="nav" className="bg-white shadow">
+      
+          <div className="mx-auto max-w-7xl">
+            
+              
+                                    <div className="hidden  sm:flex h-12 justify-around">
+                  {/* Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" */}
+                  <a
+                    onClick={() => setShowRightSettings("contents")}
+                    className={classNames(
+                        (showRightSettings == "contents")
+                            ? 'border-blue-500 text-gray-900':
+                            'text-gray-500 hover:border-gray-300 hover:text-gray-700 border-transparent', 
+                            'text-center no-underline inline-flex inline-grid items-center border-b-2 px-1 pt-1 w-full text-sm font-medium text-capitalize'
+                            )}
+                  >
+                    {activeElement.elementType ? activeElement.elementType : "Content"}
+                  </a>
+                  <a
+                    onClick={() => setShowRightSettings("styles")}
+                    className={classNames(
+                        (showRightSettings == "styles")
+                            ? 'border-blue-500 text-gray-900':
+                            'text-gray-500 hover:border-gray-300 hover:text-gray-700 border-transparent', 
+                            'text-center no-underline inline-flex inline-grid items-center border-b-2 px-1 pt-1 w-full text-sm font-medium text-capitalize'
+                            )}
+                  >
+                    Styles
+                  </a>
+                  </div>
+                  
+                  
+                  </div>
+                  </Disclosure>
                                     <div className="tab-content lp-tab-content-container left-panel-scroll" id="nav-tabContent">
                                         <div className={showRightSettings === "contents" ? "lp-tab-content tab-pane fade show active" : "tab-pane fade show"} id="editorSettings" role="tabpanel" aria-labelledby="nav-home-tab">
                                             <div className="bg-white pb-0">
